@@ -68,7 +68,12 @@ class Parser():
     def peekLine(self):
         #to reposition spot in file
         pos = self.file.tell()
-        line = self.file.readline().strip()
+        line = self.file.readline()
+        
+        if line == "\n":
+            line = self.file.readline()
+            self.currentCommand = line
+            pos = self.file.tell()
         #looking for comments
         while line.startswith('//'):
             
@@ -76,31 +81,33 @@ class Parser():
             line = self.file.readline().strip()
             if len(line.strip()) == 0:
                 break
+        
         #if at end of the file return the end of file
         if line is None:
+            print("EOF")
             pos = self.file.tell()
             
         self.file.seek(pos)
         return line
         
 #Testing
-Test = Parser("README.md")
-print(Test.currentCommand)
-print(Test.hasMoreCommands())
-Test.advance()
-print(Test.currentCommand)
-print("command is")
-print(Test.commandType())
-print("arg1 is")
-print(Test.arg1())
-print("arg2 is")
-print(Test.arg2())
-print(Test.hasMoreCommands())
-Test.advance()
-print(Test.currentCommand)
-print(Test.hasMoreCommands())
-
-Test.close()
+#Test = Parser("README.md")
+#print(Test.currentCommand)
+#print(Test.hasMoreCommands())
+#Test.advance()
+#print(Test.currentCommand)
+#print("command is")
+#print(Test.commandType())
+#print("arg1 is")
+#print(Test.arg1())
+#print("arg2 is")
+#print(Test.arg2())
+#print(Test.hasMoreCommands())
+#Test.advance()
+#print(Test.currentCommand)
+#print(Test.hasMoreCommands())
+#
+#Test.close()
         
             
             
