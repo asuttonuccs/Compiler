@@ -12,6 +12,12 @@ class CodeWriter():
         except IOError as e:
             print ("Unable to open file")
         self.name = ''
+        self.LCL = 1015
+        self.TEMP = 5
+        self.REGISTERS = 13
+        self.STATIC = 16
+        self.STACK = 256
+        
         
             
             
@@ -32,7 +38,18 @@ class CodeWriter():
                 }
         self.file.write(commandsDict.get(command))
     def WritePushPop(self, command, segment, index):
-        
+        if command == "push":
+            if segment == "constant":
+                #this first one needs to be what is being pushed not @const
+                self.file.write('@ CONST+index')
+                self.file.write('D=A')
+                self.file.write('@SP')
+                self.file.write('A=M')
+                self.file.write('M=D')
+                self.file.write('@SP')
+                self.file.write('M=M+1')
+        if command == "pop":
+            
         
     def Close(self):
         self.file.close()
