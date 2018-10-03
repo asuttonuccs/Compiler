@@ -6,7 +6,7 @@ Created on Wed Sep 26 10:00:16 2018
 """
 
 class CodeWriter():
-    def __init__(self,outputfile,parser):
+    def __init__(self,outputfile):
         self.outputfile = outputfile
         try:
             self.file = open(outputfile,'w')

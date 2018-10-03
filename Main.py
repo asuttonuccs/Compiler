@@ -9,7 +9,7 @@ from CodeWriter import CodeWriter
 def main():
     filename = "README"
     parser = Parser(filename+".vm")
-    codewriter = CodeWriter(filename+".asm", parser)
+    codewriter = CodeWriter(filename+".asm")
     parser.advance()
     while parser.hasMoreCommands():
         parser.advance()
