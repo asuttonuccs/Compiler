@@ -7,8 +7,9 @@ Created on Fri Sep 28 12:57:27 2018
 from Parser import Parser
 from CodeWriter import CodeWriter
 def main():
-    parser = Parser("README.MD")
-    codewriter = CodeWriter("Test", parser)
+    filename = "README"
+    parser = Parser(filename+".vm")
+    codewriter = CodeWriter(filename+".asm", parser)
     parser.advance()
     while parser.hasMoreCommands():
         parser.advance()
