@@ -83,7 +83,7 @@ class Parser():
                 break
         
         #if at end of the file return the end of file
-        if line is None:
+        if ("" == line):
             print("EOF")
             pos = self.file.tell()
             

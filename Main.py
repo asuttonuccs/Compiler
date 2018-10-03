@@ -5,12 +5,19 @@ Created on Fri Sep 28 12:57:27 2018
 @author: Adric
 """
 from Parser import Parser
+from CodeWriter import CodeWriter
 def main():
     parser = Parser("README.MD")
+    codewriter = CodeWriter("Test", parser)
     parser.advance()
     while parser.hasMoreCommands():
-        print(parser.commandType())
         parser.advance()
-    print(parser.commandType())
+        if parser.currentCommand.split(' ')[0] == 'push':
+            codewriter.WritePushPop(parser.currentCommand.split(' ')[0], parser.arg2(), parser.currentCommand.split(' ')[2])
+        if parser.commandType() == 'C_ARITHMETIC':
+            codewriter.writeArithmetic(parser.currentCommand)
+            
+        
+    #codewriter.testwrite(parser.currentCommand)
     parser.close()
 main()

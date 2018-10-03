@@ -1,0 +1,163 @@
+
+//PUSH CONST
+@10
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+pop local 0
+
+//PUSH CONST
+@21
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//PUSH CONST
+@22
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+pop argument 2
+
+//PUSH CONST
+@36
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+pop this 6
+
+//PUSH CONST
+@42
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//PUSH CONST
+@45
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+pop that 5
+pop that 2
+
+//PUSH CONST
+@510
+D=A
+@SP
+A=M
+M=D
+@SP
+M=M+1
+pop temp 6
+add
+
+@THAT
+D=M
+@5
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//ADD
+@SP
+AM=M-1
+D=M
+A=A-1
+M=D+M
+
+//PUSH ARG
+@ARG
+D=M
+@1
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//SUB
+@SP
+AM=M-1
+D=M
+A=A-1
+M=M-D
+
+//PUSH THIS
+@THIS
+D=M
+@6
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//PUSH THIS
+@THIS
+D=M
+@6
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//ADD
+@SP
+AM=M-1
+D=M
+A=A-1
+M=D+M
+
+//SUB
+@SP
+AM=M-1
+D=M
+A=A-1
+M=M-D
+@R5
+D=A
+@6
+
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//ADD
+@SP
+AM=M-1
+D=M
+A=A-1
+M=D+M
