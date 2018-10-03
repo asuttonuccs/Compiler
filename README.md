@@ -28,4 +28,5 @@ push this 6
 add
 sub
 push temp 6
+push static 8
 add

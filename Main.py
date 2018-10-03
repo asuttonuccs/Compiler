@@ -12,7 +12,7 @@ def main():
     parser.advance()
     while parser.hasMoreCommands():
         parser.advance()
-        if parser.currentCommand.split(' ')[0] == 'push':
+        if parser.currentCommand.split(' ')[0] == 'push' or parser.currentCommand.split(' ')[0] == 'pop':
             codewriter.WritePushPop(parser.currentCommand.split(' ')[0], parser.arg2(), parser.currentCommand.split(' ')[2])
         if parser.commandType() == 'C_ARITHMETIC':
             codewriter.writeArithmetic(parser.currentCommand)
