@@ -219,19 +219,19 @@ AM=M-1
 D=M
 A=A-1
 D=M-D
-@GT.true.1
+@GT.true.0
 
 D;JGT
 @SP
 A=M-1
 M=0
-@GT.follow.1
+@GT.follow.0
 0;JMP
-(GT.true.1)
+(GT.true.0)
 @SP
 A=M-1
 M=-1
-(GT.follow.1)
+(GT.follow.0)
 
 //PUSH THIS
 @THIS
@@ -263,18 +263,74 @@ AM=M-1
 D=M
 A=A-1
 D=M-D
-@LT.true.2
+@LT.true.0
 D;JLT
 @SP
 A=M-1
 M=0
-@LT.follow.2
+@LT.follow.0
 0;JMP
-(LT.true.2)
+(LT.true.0)
 @SP
 A=M-1
 M=-1
-(LT.follow.2)
+(LT.follow.0)
+CodeWriter.CodeWriter object at 0x000001BC8D8604A8>>
+
+D;JGT
+@SP
+A=M-1
+M=0
+@GT.follow.<bound method CodeWriter.count of <CodeWriter.CodeWriter object at 0x000001BC8D8604A8>>
+0;JMP
+(GT.true.<bound method CodeWriter.count of <CodeWriter.CodeWriter object at 0x000001BC8D8604A8>>)
+@SP
+A=M-1
+M=-1
+(GT.follow.<bound method CodeWriter.count of <CodeWriter.CodeWriter object at 0x000001BC8D8604A8>>)
+
+//PUSH THIS
+@THIS
+D=M
+@6
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//PUSH THIS
+@THIS
+D=M
+@6
+A=D+A
+D=M
+@SP
+A=M
+M=D
+@SP
+M=M+1
+
+//LT
+@SP
+AM=M-1
+D=M
+A=A-1
+D=M-D
+@LT.true.<bound method CodeWriter.count of <CodeWriter.CodeWriter object at 0x000001BC8D8604A8>>
+D;JLT
+@SP
+A=M-1
+M=0
+@LT.follow.<bound method CodeWriter.count of <CodeWriter.CodeWriter object at 0x000001BC8D8604A8>>
+0;JMP
+(LT.true.<bound method CodeWriter.count of <CodeWriter.CodeWriter object at 0x000001BC8D8604A8>>)
+@SP
+A=M-1
+M=-1
+(LT.follow.<bound method CodeWriter.count of <CodeWriter.CodeWriter object at 0x000001BC8D8604A8>>)
 
 //SUB
 @SP

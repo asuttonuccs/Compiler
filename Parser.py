@@ -20,7 +20,7 @@ class Parser():
         self.commandDictionary = {
                 'add':'C_ARITHMETIC',
                 'sub':'C_ARITHMETIC',
-                'negative':'C_ARITHMETIC',
+                'neg':'C_ARITHMETIC',
                 'lt':'C_ARITHMETIC',
                 'eq':'C_ARITHMETIC',
                 'gt':'C_ARITHMETIC',
@@ -33,7 +33,8 @@ class Parser():
                 'if':'C_IF',
                 'function':'C_FUNCTION',
                 'return':'C_RETURN',
-                'call':'C_CALL'
+                'call':'C_CALL',
+                'label':'C_LABEL'
                 }
     #Checks to see if there are more commands by calling peekLine
     def hasMoreCommands(self):
