@@ -17,6 +17,8 @@ class Parser():
             print ("Unable to open file")
             
         self.currentCommand = None
+        
+        #These are the command types that should be looked for
         self.commandDictionary = {
                 'add':'C_ARITHMETIC',
                 'sub':'C_ARITHMETIC',
@@ -30,7 +32,7 @@ class Parser():
                 'push':'C_PUSH',
                 'pop':'C_POP',
                 'goto':'C_GOTO',
-                'if':'C_IF',
+                'if-goto':'C_IF',
                 'function':'C_FUNCTION',
                 'return':'C_RETURN',
                 'call':'C_CALL',
@@ -65,13 +67,13 @@ class Parser():
     def close(self):
         self.file.close()
     
-    
+    #looks at the next line to see if the line is only a newline or a comment if so it skips the line 
     def peekLine(self):
         #to reposition spot in file
         pos = self.file.tell()
         line = self.file.readline()
         
-        if line == "\n":
+        if line == "\n" or line == "\r" or line == "\r\n":
             line = self.file.readline()
             self.currentCommand = line
             pos = self.file.tell()
