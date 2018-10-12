@@ -50,7 +50,7 @@ class CodeWriter():
             self.file.write(commandsDict.get(command.strip()))
    
     #this takes care of all of the various push and pop commands
-    def WritePushPop(self, command, segment, index):
+    def WritePushPop(self, command, segment, index,currfile):
         if command == "push":
             if segment == "constant":
                 self.file.write("\n//PUSH CONST\n@" + index + "\nD=A\n@SP\nA=M\nM=D\n@SP\nM=M+1\n")
@@ -69,7 +69,7 @@ class CodeWriter():
                     self.file.write("\n//POINTER\n@THAT\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n")
                     
             elif segment == "static":
-                self.file.write("\n//PUSH STATIC\n@" + self.outputfile + "." +index + "\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n")
+                self.file.write("\n//PUSH STATIC\n@" + currfile + "." +index + "\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n")
             elif segment == "temp":
                 self.file.write("\n//PUSH TEMP\n@R5\nD=A\n@" + index + "\nA=D+A\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n")
             else:
@@ -90,7 +90,7 @@ class CodeWriter():
                 else:
                     self.file.write("\n//POP POINTER\n@THAT\nD=A\n@R13\nM=D\n@SP\nAM=M-1\nD=M\n@R13\nA=M\nM=D\n")
             elif segment == "static":
-                self.file.write("\n//POP STATIC\n@" + self.outputfile + "." + index + "\nD=A\n@R13\nM=D\n@SP\nAM=M-1\nD=M\n@R13\nA=M\nM=D\n")
+                self.file.write("\n//POP STATIC\n@" + currfile + "." + index + "\nD=A\n@R13\nM=D\n@SP\nAM=M-1\nD=M\n@R13\nA=M\nM=D\n")
             elif segment == "temp":
                 self.file.write("\n@R5\nD=A\n@" + index + "\nD=D+A\n@R13\nM=D\n@SP\nAM=M-1\nD=M\n@R13\nA=M\nM=D\n")
             else:
@@ -115,10 +115,34 @@ class CodeWriter():
     def writeCall(self,functionName,numArgs):
         functionName = functionName.strip()
         counter = self.counterCall
-        self.couterCall = self.counterCall+1
-        self.file.write("\n//CALL\n@SP\nD=M\n@R13\nM=D\n@RET."+str(counter)+"\nD=A\n@SP\nA=M\nM=D\n@SP\nM=M+1\n@LCL\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n@ARG\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n@THIS\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n@THAT\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n@R13\nD=M\n@"+str(numArgs)+"\nD=D-A\n@ARG\nM=D\n@SP\nD=M\n@LCL\nM=D\n@"+functionName+"\n0;JMP\n(RET."+ str(counter) +")\n")
+        self.counterCall = self.counterCall+1
+        self.file.write("\n//CALL\n@SP\nD=M\n@R13\nM=D\n"
+                          "@RET."+str(counter)+
+                          "\nD=A\n@SP\nA=M\nM=D\n@SP\nM=M+1\n"
+                          "@LCL\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n"
+                          "@ARG\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n"
+                          "@THIS\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n"
+                          "@THAT\nD=M\n@SP\nA=M\nM=D\n@SP\nM=M+1\n"
+                          "@R13\nD=M\n@"
+                          +str(numArgs)+
+                          "\nD=D-A\n"
+                          "@ARG\nM=D\n@SP\nD=M\n"
+                          "@LCL\nM=D\n@"
+                          +functionName+
+                          "\n0;JMP\n"
+                          "(RET."+ str(counter) +")\n")
     def writeReturn(self):
-        self.file.write("\n//RETURN\n@LCL\nD=M\n@5\nA=D-A\nD=M\n@R13\nM=D\n@SP\nA=M-1\nD=M\n@ARG\nA=M\nM=D\nD=A+1\n@SP\nM=D\n@LCL\nAM=M-1\nD=M\n@THAT\nM=D\n@LCL\nAM=M-1\nD=M\n@THIS\nM=D\n@LCL\nAM=M-1\nD=M\n@ARG\nM=D\n@LCL\nAM=M-1\nD=M\n@LCL\nM=D\n@R13\nA=M\n0;JMP\n")
+        self.file.write("\n//RETURN\n"
+                        "@LCL\nD=M\n@5\nA=D-A\nD=M\n"
+                        "@R13\nM=D\n@SP\nA=M-1\nD=M\n"
+                        "@ARG\nA=M\nM=D\nD=A+1\n@SP\nM=D\n"
+                        "@LCL\nAM=M-1\nD=M\n"
+                        "@THAT\nM=D\n"
+                        "@LCL\nAM=M-1\nD=M\n"
+                        "@THIS\nM=D\n"
+                        "@LCL\nAM=M-1\nD=M\n"
+                        "@ARG\nM=D\n@LCL\nAM=M-1\nD=M\n"
+                        "@LCL\nM=D\n@R13\nA=M\n0;JMP\n")
     #this may conflict with labels
     def writeFunction(self,functionName, numLocals):
         functionName = functionName.strip()

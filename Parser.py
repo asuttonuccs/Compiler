@@ -8,7 +8,7 @@ Created on Sun Sep 23 12:30:46 2018
 
 class Parser():
     def __init__(self, filename):
-        
+        self.commandList = []
         self.filename = filename
         #Trying to open file if it doesnt exist prints unable to open
         try:
@@ -17,6 +17,10 @@ class Parser():
             print ("Unable to open file")
             
         self.currentCommand = None
+        for line in self.file:
+            line = line.strip()
+            if not line.startswith('//') and len(line) !=0:
+                self.commandList.append(line)
         
         #These are the command types that should be looked for
         self.commandDictionary = {
@@ -40,81 +44,41 @@ class Parser():
                 }
     #Checks to see if there are more commands by calling peekLine
     def hasMoreCommands(self):
-        nextLine = self.peekLine()
-        if nextLine is None or nextLine == '':
+        
+        if len(self.commandList) ==0:
             return False
         else:
             return True
+        
     #Advances to the next command by making sure there are more
     def advance(self):
         if self.hasMoreCommands():
-            self.currentCommand = self.file.readline()
+            self.currentCommand = self.commandList[0] 
+            self.commandList.pop(0)
+
+
     def commandType(self):
         if self.commandDictionary.get(self.currentCommand.strip().split(' ')[0]):
             return self.commandDictionary.get(self.currentCommand.strip().split(' ')[0])
         
     def arg1(self):
-        if self.commandType() is not 'C_RETURN':
+       # if self.commandType() is not 'C_RETURN':
             return self.currentCommand.strip().split(' ')[0]
-        else:
-            print("C_RETURN is not valid for arg1")
+#        else:
+#            print(self.currentCommand)
+#            print("C_RETURN is not valid for arg1")
     def arg2(self):
-        allowable = ['C_PUSH', 'C_POP', 'C_FUNCTION', 'C_CALL']
+        allowable = ['C_PUSH', 'C_POP', 'C_FUNCTION', 'C_CALL','C_IF','C_GOTO','C_LABEL']
         if self.commandType() in allowable:
             return self.currentCommand.strip().split(' ')[1]
         else:
             print("{} are not valid for arg2".format(str(allowable)))
+    def arg3(self):
+        if len(self.currentCommand.split(' ')) > 2:
+            return self.currentCommand.strip().split(' ')[2]
+        else:
+            print("ERROR ARG3 IS TOO SHORT")
     def close(self):
         self.file.close()
     
-    #looks at the next line to see if the line is only a newline or a comment if so it skips the line 
-    def peekLine(self):
-        #to reposition spot in file
-        pos = self.file.tell()
-        line = self.file.readline()
-        
-        if line == "\n" or line == "\r" or line == "\r\n":
-            line = self.file.readline()
-            self.currentCommand = line
-            pos = self.file.tell()
-        #looking for comments
-        while line.startswith('//'):
-            
-            pos = self.file.tell()
-            line = self.file.readline().strip()
-            if len(line.strip()) == 0:
-                break
-        
-        #if at end of the file return the end of file
-        if ("" == line):
-            print("EOF")
-            pos = self.file.tell()
-            
-        self.file.seek(pos)
-        return line
-        
-#Testing
-#Test = Parser("README.md")
-#print(Test.currentCommand)
-#print(Test.hasMoreCommands())
-#Test.advance()
-#print(Test.currentCommand)
-#print("command is")
-#print(Test.commandType())
-#print("arg1 is")
-#print(Test.arg1())
-#print("arg2 is")
-#print(Test.arg2())
-#print(Test.hasMoreCommands())
-#Test.advance()
-#print(Test.currentCommand)
-#print(Test.hasMoreCommands())
-#
-#Test.close()
-        
-            
-            
-            
-        
     
-        
