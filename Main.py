@@ -19,7 +19,7 @@ def main():
     filesnames = []
     inputList = []
     ##put the file directory here
-    filesPath = "C:\\Users\\drumm\\OneDrive\\Documents\\Code\\nand2tetris\\projects\\08\\FunctionCalls\\FibonacciElement\\"
+    filesPath = "C:\\Users\\drumm\\OneDrive\\Documents\\Code\\nand2tetris\\projects\\08\\FunctionCalls\\StaticsTest\\"
     runInit = False
     
     inputList = glob.glob(filesPath +"*.vm")
