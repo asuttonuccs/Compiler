@@ -79,7 +79,7 @@ class CompilationEngine():
             self.eatToken()
             self.jack.advance()
         else:
-            sys.exit("Invalid syntax expecting } at number:{} token is:{}".format(999,self.jack.currentToken))
+            sys.exit("Invalid syntax expecting }} at number:{} token is:{}".format(999,self.jack.currentToken))
         self.closeTag("class")
         
     #This takes take of the class variable declarations        
@@ -600,7 +600,7 @@ class CompilationEngine():
         elif(self.jack.tokenCat() =="INTEGER"):
             self.outFile.write("\n<{}> {} </{}>".format("integerConstant",self.jack.currentToken,"integerConstant"))
         elif(self.jack.tokenCat() == "STRING"):
-            self.outFile.write("\n<{}> {} </{}>".format("stringConstant",self.jack.currentToken,"stringConstant"))
+            self.outFile.write("\n<{}> {} </{}>".format("stringConstant",self.jack.currentToken.replace("\"", ''),"stringConstant"))
         else:    
             self.outFile.write("\n<{}> {} </{}>".format(self.jack.tokenCat(),self.jack.currentToken,self.jack.tokenCat()))
     

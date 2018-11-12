@@ -147,7 +147,6 @@ class JackTokenizer():
         for line in self.file:
             
             line = line.strip()
-            print(line)
 
             
 
@@ -156,53 +155,54 @@ class JackTokenizer():
 #SOMETHING HERE getting stuck between qoutes??
             if not line.startswith('//') and len(line) !=0:
 
-                for token in line:
-                    print(token)
-
+  
+                #print("TOKEN IS: " +token)
+                for char in line:
                     
-                    #print("TOKEN IS: " +token)
-                    for char in token:
-                        
-                       ########### 
+                   ########### 
+                    if char == '"' and stringFlag == False:
+                        tok = tok + char
+                        stringFlag = True
+                        continue
+                    if(stringFlag == True):
+                        #print(token)
                         if char == '"':
                             tok = tok + char
-                            stringFlag = True
+                            self.tokenList.append(tok)
+                            print("the TOken is: "+ tok)
+                            tok = ""
+                            stringFlag = False
+                            print("SET STRINGFLAG FALSE")
                             continue
-                        while(stringFlag == True):
-                            #print(token)
-                            if char == '"':
-                                tok = tok + char
-                                self.tokenList.append(tok)
-                                tok = ""
-                                stringFlag = False
-                                nextL = True
-                            else:
-                                tok = tok + char
-                        if nextL:
-                            nextL = False
-                            continue
-                        #############
-                        
-                        #print("CHAR IS:" + char + "TYPE IS: " + str(type(char)))
-                        if ((char not in self.SYMBOLS) and (char not in self.WHITESPACE)):
-                            #print("INSIDE not symbol or whitespace with char: " + char)
-                            tok = tok + char
-                        #it is a symbol
-                        elif(char in self.SYMBOLS):
-                            
-                            #checks to make sure its not empty
-                            if tok:
-                                self.tokenList.append(tok)
-                                tok = ""
-                            self.tokenList.append(char)
-                        #it is a whitespace
-                        elif(char in self.WHITESPACE):
-                            #checks to make sure its not empty
-                            if tok:
-                                self.tokenList.append(tok)
-                                tok = ""
                         else:
-                            print("ERROR")
+                            tok = tok + char
+                            continue
+                        
+
+                        
+                    #############
+                    
+                    #print("CHAR IS:" + char + "TYPE IS: " + str(type(char)))
+                    if ((char not in self.SYMBOLS) and (char not in self.WHITESPACE)):
+                        #print("INSIDE not symbol or whitespace with char: " + char)
+                        tok = tok + char
+                    #it is a symbol
+                    elif(char in self.SYMBOLS):
+                        
+                        #checks to make sure its not empty
+                        if tok:
+                            self.tokenList.append(tok)
+                            tok = ""
+                        self.tokenList.append(char)
+                    #it is a whitespace
+                    elif(char in self.WHITESPACE):
+                        #checks to make sure its not empty
+                        if tok:
+                            self.tokenList.append(tok)
+                            tok = ""
+                    else:
+                        print("ERROR")
+                    print ("The token is :" + tok)
                 #This is where when the line ends if there is a token being built it will add it to the list
                 if tok:
                     self.tokenList.append(tok)
