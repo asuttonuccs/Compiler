@@ -20,6 +20,7 @@ class CompilationEngine():
     
 
     def __init__(self, filename):
+        self.xml = True
         self.operators = ['+', '-', '*', '/', '&','|','<','>','=']
         self.keyWords = ["class","constructor","function","method","field","static","var","int","char","boolean","void","true","false","null","this","let","do","if","else","while","return"]
         self.symbols = ['{','}','(',')','[',']','.',',',';','+','-','*','/','&','|','<','>','=','~']
@@ -577,32 +578,65 @@ class CompilationEngine():
     #stuff
     #</class>
     def openTag(self,tagName):
-         self.outFile.write("\n<{}>".format(tagName))
+        if self.xml == True:
+            self.outFile.write("\n<{}>".format(tagName))
+        else:
+            pass
     #This is the closing tag for classes and functions
     def closeTag(self,tagName):
-        self.outFile.write("\n</{}>".format(tagName))
+        if self.xml == True:
+            self.outFile.write("\n</{}>".format(tagName))
+        else:
+            pass
     #This takes the token and write it to the file moving to the next token always only looking at the current token
     def eatToken(self):
         
         if(self.jack.currentToken in self.keyWords):
-            self.outFile.write("\n<{}> {} </{}>".format("keyword",self.jack.currentToken,"keyword"))
+            if self.xml == True:
+                self.outFile.write("\n<{}> {} </{}>".format("keyword",self.jack.currentToken,"keyword"))
+            else:
+                pass
         elif(self.jack.currentToken in self.symbols):
             if(self.jack.currentToken == "<"):
-                self.outFile.write("\n<{}> {} </{}>".format("symbol","&lt;","symbol"))
+                if self.xml == True:
+                    self.outFile.write("\n<{}> {} </{}>".format("symbol","&lt;","symbol"))
+                else:
+                    pass
             elif(self.jack.currentToken == ">"):
-                self.outFile.write("\n<{}> {} </{}>".format("symbol","&gt;","symbol"))
+                if self.xml == True:
+                    self.outFile.write("\n<{}> {} </{}>".format("symbol","&gt;","symbol"))
+                else:
+                    pass
             elif(self.jack.currentToken == "&"):
-                self.outFile.write("\n<{}> {} </{}>".format("symbol","&amp;","symbol"))
+                if self.xml == True:
+                    self.outFile.write("\n<{}> {} </{}>".format("symbol","&amp;","symbol"))
+                else:
+                    pass
             else:
-                self.outFile.write("\n<{}> {} </{}>".format("symbol",self.jack.currentToken,"symbol"))
+                if self.xml == True:
+                    self.outFile.write("\n<{}> {} </{}>".format("symbol",self.jack.currentToken,"symbol"))
+                else:
+                    pass
         elif(self.jack.tokenCat() =="IDENT"):
-            self.outFile.write("\n<{}> {} </{}>".format("identifier",self.jack.currentToken,"identifier"))
+            if self.xml == True:
+                self.outFile.write("\n<{}> {} </{}>".format("identifier",self.jack.currentToken,"identifier"))
+            else:
+                pass
         elif(self.jack.tokenCat() =="INTEGER"):
-            self.outFile.write("\n<{}> {} </{}>".format("integerConstant",self.jack.currentToken,"integerConstant"))
+            if self.xml == True:
+                self.outFile.write("\n<{}> {} </{}>".format("integerConstant",self.jack.currentToken,"integerConstant"))
+            else:
+                pass
         elif(self.jack.tokenCat() == "STRING"):
-            self.outFile.write("\n<{}> {} </{}>".format("stringConstant",self.jack.currentToken.replace("\"", ''),"stringConstant"))
-        else:    
-            self.outFile.write("\n<{}> {} </{}>".format(self.jack.tokenCat(),self.jack.currentToken,self.jack.tokenCat()))
+            if self.xml == True:
+                self.outFile.write("\n<{}> {} </{}>".format("stringConstant",self.jack.currentToken.replace("\"", ''),"stringConstant"))
+            else:
+                pass
+        else:
+            if self.xml == True:
+                self.outFile.write("\n<{}> {} </{}>".format(self.jack.tokenCat(),self.jack.currentToken,self.jack.tokenCat()))
+            else:
+                pass
     
     
 comp = CompilationEngine("Main.jack")

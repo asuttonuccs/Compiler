@@ -137,29 +137,21 @@ class JackTokenizer():
     def readIn(self):
         tok = ""
         stringFlag = False
-        nextL = False
         
         #for each line in file strip and remove empty lines or commented lines
-        #Then for each token in line, look at the char in the token if it is not a symbol or whitespace
+        #Then for each char in line, if it is not a symbol or whitespace
         #build that token, when a symbol or white space is hit add the token to the list then reset token
+        #if it is a string const ex. "Hello World" build it including whitespace and qoutes
         #Add the symbol as a token 
         #Once at end of line if there is a token that was being built append that token
         for line in self.file:
             
             line = line.strip()
 
-            
-
-                
-                      
-#SOMETHING HERE getting stuck between qoutes??
             if not line.startswith('//') and len(line) !=0:
 
-  
-                #print("TOKEN IS: " +token)
                 for char in line:
-                    
-                   ########### 
+
                     if char == '"' and stringFlag == False:
                         tok = tok + char
                         stringFlag = True
@@ -179,9 +171,6 @@ class JackTokenizer():
                             continue
                         
 
-                        
-                    #############
-                    
                     #print("CHAR IS:" + char + "TYPE IS: " + str(type(char)))
                     if ((char not in self.SYMBOLS) and (char not in self.WHITESPACE)):
                         #print("INSIDE not symbol or whitespace with char: " + char)
