@@ -1,0 +1,7 @@
+push local 2
+pop arg 3
+call Math.multiply 2
+label lab2
+call run 1
+function freeStuff 2
+return

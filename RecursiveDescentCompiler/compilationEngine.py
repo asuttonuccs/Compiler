@@ -9,7 +9,7 @@ from jackTokenizer import JackTokenizer
 class CompilationEngine():
     #
     #This program parses tok files.
-    #INPUT is a .tok file from the Jack language. title fileName as the file you want to input, must be in same folder or use path
+    #INPUT file from the Jack language. title fileName as the file you want to input, must be in same folder or use path
     #OUTPUT is a .xml file with tags that break down the tokens into the syntax code
     #The program should show you what it expects if it is not there. For example if missing a closing } it will exit and tell you "expecting }"
     #
